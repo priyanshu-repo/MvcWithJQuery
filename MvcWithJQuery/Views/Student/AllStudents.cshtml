@@ -1,0 +1,58 @@
+﻿@model IEnumerable<MvcWithJQuery.Models.Student>
+
+<h2>AllStudents</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            @*@Html.ActionLink("Create new Student", "InsertData", "Student", new {@class= "btn btn-primary" })*@
+            @*Second Approach*@
+            <a href="@Url.Action("InsertData","Student")" class="btn btn-primary">Create new Student</a>
+            <br />
+            <br />
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th hidden>Student No</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td hidden>@item.Id</td>
+                            <td>@item.Name</td>
+                            <td>@item.Age</td>
+                            <td><button class="btn btn-warning" data-id="@item.Id" id="btnEdit" type="button">Edit</button></td>
+                            <td><button class="btn btn-danger" data-id="@item.Id" id="btnDelete" type="button">Delete</button></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+<script>
+        $("#btnEdit").click(function () {
+            $.ajax({
+                type: "GET",
+                url: "/Student/Update",
+                data: {
+                    Id: $(this).attr("data-id")
+                    }
+            })
+                .done(function (response) {
+                    
+                })
+                .fail(function () {
+                    alert("something went wrong");
+                })
+        })
+    
+</script>
