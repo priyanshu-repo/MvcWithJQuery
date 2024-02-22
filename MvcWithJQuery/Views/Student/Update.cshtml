@@ -1,9 +1,5 @@
-﻿
-@{
-    ViewBag.Title = "Update";
-}
+﻿@model MvcWithJQuery.Models.Student
 
-@model MvcWithJQuery.Models.Student
 <h2>update</h2>
 <form id="stdForm">
     <div class="container">
@@ -12,7 +8,7 @@
 
             <div class="col-sm-4" style="border:5px solid yellowgreen;padding:10px">
 
-                <input  type="text" id="txtId" class="form-control" name="Id" value="@Model.Id" readonly  />
+                <input type="text" id="txtId" class="form-control" name="Id" value="@Model.Id" readonly />
                 Name
                 <input type="text" id="txtName" class="form-control" name="Name" value="@Model.Name" />
                 Age
@@ -25,21 +21,21 @@
     </div>
 </form>
 
-@Scripts.Render("~/bundles/jquery")
+
 <script>
-    $(document).ready(function () {
-        $("#btnUpdate").click(function () {
-            $.ajax({
-                type: "POST",
-                url: "/Student/Update",
-                data:$("#stdForm").serialize()
-            })
-                .done(function (response) {
-                    
-                })
-                .fail(function () {
-                    alert("something went wrong");
-                })
+    $("#btnUpdate").click(function () {
+        $.ajax({
+            type: "POST",
+            url: "/Student/Update",
+            data: $("#stdForm").serialize()
         })
+            .done(function () {
+                alert('data updated successfully');
+                window.location.replace("AllStudents");
+            })
+            .fail(function () {
+                alert("something went wrong");
+            })
     })
+
 </script>

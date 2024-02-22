@@ -13,7 +13,7 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th hidden>Student No</th>
+                        <th >Student No</th>
                         <th>Name</th>
                         <th>Age</th>
                         <th>Edit</th>
@@ -24,35 +24,80 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td hidden>@item.Id</td>
+                            <td >@item.Id</td>
                             <td>@item.Name</td>
                             <td>@item.Age</td>
-                            <td><button class="btn btn-warning" data-id="@item.Id" id="btnEdit" type="button">Edit</button></td>
-                            <td><button class="btn btn-danger" data-id="@item.Id" id="btnDelete" type="button">Delete</button></td>
+                            <td><button class="btn btn-warning btnEdit" data-id="@item.Id"  type="button">Edit</button></td>
+                            <td><button class="btn btn-danger btnDelete" data-id="@item.Id" type="button">Delete</button></td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-8" id="actionContainer">
+
+        </div>
+    </div>
 </div>
 
 @Scripts.Render("~/bundles/jquery")
 <script>
-        $("#btnEdit").click(function () {
+
+    $('.btnDelete').on('click', function () {
+        var confirmation = confirm('Are you sure want to delete ?');
+        if (confirmation) {
+            $.ajax({
+                type: 'POST',
+                url: '/Student/Delete',
+                data: {
+                    Id: $(this).attr('data-id')
+                }
+            })
+                .done(function () {
+                    alert('Student removed successfully');
+                    window.location.replace("AllStudents");
+                })
+                .fail(function () {
+                    alert("something went wrong");
+                })
+        }
+
+    })
+
+    $(".btnEdit").click(function () {
             $.ajax({
                 type: "GET",
-                url: "/Student/Update",
+                url: '@Url.Action("Update", "Student")',
                 data: {
                     Id: $(this).attr("data-id")
                     }
             })
                 .done(function (response) {
-                    
+                    $("#actionContainer").html(response);
                 })
                 .fail(function () {
                     alert("something went wrong");
                 })
         })
-    
+
+
+
+
+    //$(".btnDelete").click(function () {
+    //    $.ajax({
+    //        type: 'POST',
+    //        url: '/Student/Delete',
+    //        data: {
+    //            Id: $(this).attr('data-id')
+    //            }
+    //    })
+    //        .done(function () {
+    //            window.location.replace("AllStudents")
+    //        })
+    //        .fail(function () {
+    //            alert("something went wrong");
+    //        })
+    //})
 </script>

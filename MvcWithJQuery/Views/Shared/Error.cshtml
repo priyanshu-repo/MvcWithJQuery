@@ -1,13 +1,28 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Error</title>
-</head>
-<body>
-    <hgroup>
-        <h1>Error.</h1>
-        <h2>An error occurred while processing your request.</h2>
-    </hgroup>
-</body>
-</html>
+﻿@*<!DOCTYPE html>
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Error</title>
+    </head>
+    <body>
+        <hgroup>
+            <h1>Error.</h1>
+            <h2>An error occurred while processing your request.</h2>
+        </hgroup>
+    </body>
+    </html>*@
+
+@{
+    Layout = "_Layout.cshtml";
+}
+<div class="row">
+    <div class="exceptionmessage col-md-12 text-center">
+        <div class="center-block">
+            @*<img src="~/Content/i/404.png" class="img-responsive" />*@
+        </div>
+        <strong>@ViewBag.Title</strong>
+        <span class="center-block small text-uppercase">@ViewBag.Main</span>
+        <div class="center-block">@Html.ActionLink("Return to the Homepage", "Index", "Home", null, new { @class = "btn btn-primary" })</div>
+    </div>
+</div>
+

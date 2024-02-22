@@ -25,6 +25,7 @@ namespace MvcWithJQuery.Models
 
         }
         #endregion
+
         string str = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
 
         public List<Student> GetStudents()
@@ -110,6 +111,26 @@ namespace MvcWithJQuery.Models
                 {
                     cmd.CommandType = CommandType.Text;
                     cmd.CommandText = "update Students set Name='"+student.Name+"',Age='"+student.Age+"' where Id='"+student.Id+"'";
+                    cmd.Connection = con;
+                    if (con.State == ConnectionState.Closed)
+                    {
+                        con.Open();
+                    }
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+        }
+
+        public void DeleteStudent(int id)
+        {
+            using (SqlConnection con = new SqlConnection())
+            {
+                con.ConnectionString = str;
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "delete from Students where id='" + id + "'";
                     cmd.Connection = con;
                     if (con.State == ConnectionState.Closed)
                     {
